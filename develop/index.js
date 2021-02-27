@@ -71,7 +71,36 @@ function startPrompt(){
 
             }
         })
-};
+}
+function createEngineer {
+    inquirer.prompt ([
+        {
+            type: "input",
+            name: "engineerName",
+            message: "What is the name of the engineer?"
+        }
+        {
+            type: "input",
+            name: "engineerID",
+            message: "What is the engineer's id?"
+        }
+        {
+            type: "input",
+            name: "engineerEmail",
+            message: "What is the engineer's email?"
+        }
+        {
+            type: "input",
+            name: "engineerGithub?",
+            message: "What is the engineer's github?"
+        }
+    ]).then(choice => {
+        const engineer = new Engineer (choice.engineerName, choice.engineerID, choice.engineerEmail, choice.egineerGithub);
+        teamMembers.push(engineer);
+        idArray.push(choice.engineerID);
+        createElse();
+    })
+}
     //cb function
     makeManager()
 }
