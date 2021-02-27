@@ -44,9 +44,34 @@ function startPrompt(){
             const manager = new Manager (res.managerName, res.managerID, res.managerEmail, res.managerOfficeNumber);
             teamMembers.push(manager);
             idArray.push(res.managerID);
-
+            createElse()
         })
     }
+
+    function createElse() {
+        inquirer.prompt([
+            {
+                type: "list",
+                name: "employeeChoice",
+                choices: [
+                    "Engineer",
+                    "Intern",
+                    "I'm finished"
+                ]
+            }
+        ]).then(choice => {
+            switch (choice.memberChoice) {
+                case "Engineer":
+                    addEngineer();
+                    break;
+                case "Inern":
+                    addInern();
+                    break;
+                default:
+
+            }
+        })
+};
     //cb function
     makeManager()
 }
