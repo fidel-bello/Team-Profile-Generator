@@ -124,6 +124,9 @@ function addIntern(){
         const teamMember = new Intern(name, id, email, school)
         teamArray.push(teamMember)
         addMembers();
-    })
+    });
+}
+function createHtml(){
+    console.log("Success!")
 }
 startPrompts();
