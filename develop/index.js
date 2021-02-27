@@ -68,7 +68,7 @@ function startPrompt(){
                     addInern();
                     break;
                 default:
-
+                makeHtml()
             }
         })
 }
@@ -100,6 +100,43 @@ function createEngineer {
         idArray.push(choice.engineerID);
         createElse();
     })
+
+}
+function createIntern(){
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "internName",
+            message: "What is the intern's name?"
+        }
+        {
+            type: "input",
+            name: "internID",
+            message: "What is the id for the intern?",
+        }
+        {
+            type: "input",
+            name: "internEmail",
+            message: "What is the email for the intern?",
+        }
+        {
+            type: "input",
+            name: "internSchool",
+            message: "Where did the intern attend school?"
+        }
+    ]).then(choice =>{
+         const intern = new Intern (choice.inernName, choice.internID, choice.internEmail, choice.internSchool);
+         teamMembers.push(intern);
+         idArray.push(choice.internID);
+         createElse()
+    })
+}
+
+function makeHtml() {
+    if (!fs.existsSync(OUTPUT_DIR)) {
+        fs.mkdirSync(OUTPUT_DIR)
+    }
+    fs.mkdirSync(OutputPath, render(teamMembers), "UTF-8");
 }
     //cb function
     makeManager()
