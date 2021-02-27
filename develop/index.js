@@ -101,4 +101,29 @@ function addEngineer() {
         addMembers()
     })
 }
+
+function addIntern(){
+    inquirer.prompt([
+        {
+            message: "what is the intern's name?",
+            name: "name",
+        },
+        {
+            message: "What is the intern's email?",
+            name: "email",
+        },
+        {
+            message: "Where did the intern attend school?",
+            name: "school"
+        }
+    ]).then(function(data){
+        const name = data.name
+        const id = teamArray.length + 1
+        const email = data.email
+        const school = data.school
+        const teamMember = new Intern(name, id, email, school)
+        teamArray.push(teamMember)
+        addMembers();
+    })
+}
 startPrompts();
