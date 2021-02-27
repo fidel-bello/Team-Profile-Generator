@@ -48,6 +48,57 @@ function startPrompts(){
         addMembers()
      })
  }
+// add team members prompts
+function addMembers(){
+    inquirer.prompt([
+        {
+            type: "list",
+            message: "Would like to add other employees?",
+            choices: [
+                "add engineer",
+                "add intern",
+                "I'm finished!"
+            ],
+            name: "addMembers"
+        }
+        
+    ]).then(function(data){
+        switch (data.addMembers) {
+            case "add engineer":
+                addEngineer()
+                break;
+            case "add intern":
+                addIntern()
+                break;
+            case "I'm finished!":
+                createHtml();
+                break;
+        }
+    })
+}
 
-function addMembers(){}
+function addEngineer() {
+    inquirer.prompt([
+        {
+            message: "What is the engineer's name?",
+            name: "name"
+        },
+        {
+            message: "What is the engineer's email?",
+            name: "email"
+        },
+        {
+            message: "What is the engineer's github?",
+            name: "github"
+        }
+    ]).then(function(data){
+        const name = data.name
+        const email = data.email
+        const github = data.github
+        const id = teamArray.length + 1
+        const teamMember = new Engineer(name, id, email, github)
+        teamArray.push(teamMember);
+        addMembers()
+    })
+}
 startPrompts();
