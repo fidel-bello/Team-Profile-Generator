@@ -17,7 +17,7 @@ const generateTeam = team => {
     </div>
         `
     }
-
+    //generate html for engineers
     const makeEngineer = engineer => {
         return `
         <div class="card employee-card">
@@ -35,6 +35,7 @@ const generateTeam = team => {
 </div>
 `
     }
+    //generate html for interns
     const makeInter = intern => {
         return `
         <div class="card employee-card">
@@ -52,6 +53,7 @@ const generateTeam = team => {
 </div>
         `
     }
+    
     const html = [];
    
     html.push(team.filter(worker => worker.getRole() === "Manager").map(manager => makeManager(manager)));
