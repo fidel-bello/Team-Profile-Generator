@@ -35,6 +35,7 @@ const questions = {
         return {
             message: `What is the ${member.toLowerCase()}'s ${item}? `,
             type: "input",
+            name: variable,
             validate: validate
         }
     }
@@ -61,6 +62,53 @@ switch (member) {
    break;
 }
 }
+ 
+function getModule(file){
+    return readFile(file, "utf8")
+}
+
+async function generateHtml(){
+    let source= {
+        Main : await getModule("./src/main.html"),
+        Manager: await getModule("./src/manager.html"),
+        Engineer: await getModule("./src/engineer.html"),
+        Intern: await getModule("./src/intern.html")
+    }
+    let employeesHTML = "";
+    for (let employee of employees) {
+        let html = source[employee.constructor.name]
+        .replace(/{% name %}/gi, employee.name)
+        .replace(/{% id %}/gi, employee.id)
+        .replace(/{% email %}/gi, employee.email);
+        switch (employee.constructor.name) {
+            case "Manager":
+                 html = html.replace(/{% officeNumber %}/gi, employee.officeNumber);                
+                break;
+            case "Engineer":
+                html = html.replace(/{% github %}/gi, employee.github);
+                break;
+            case "Intern":
+                html = html.replace(/{% school %}/gi, employee.school);
+                break;
+        }
+        employeesHTML += html;
+    }
+    let completeHTML = source["Main"].replace(/{% employees %}/gi, employeesHTML);
+    createHTML(completeHTML)
+}
+
+async function createHTML(html) {
+    console.log("CREATING...");
+    let file = `team.html`;
+    let dir = "./dist";
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir);
+    }
+    await writeFile(`${dir}/${file}`, html);
+    console.log(`HTML has been created to "${dir}/${file}".`);
+    return;
+}
+
  async function init() {
      console.log("Let's get started!");
      await addRole("Manager");
@@ -69,7 +117,7 @@ switch (member) {
      while (member != exit) {
          let { member} = await inquirer.prompt(questions.type());
          if (member === exit) {
-             return createHtml();
+             return generateHtml();
          }
          await addRole(member);
      }
