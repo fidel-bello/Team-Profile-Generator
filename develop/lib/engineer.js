@@ -3,7 +3,7 @@ const Employee  = require ('./employee')
 
 // class engineer gets properties and methods from employee file
 class Engineer extends Employee {
-    constructor (id, name, email, github) {
+    constructor (name, id, email, github) {
     //same properties
         super(name, id, email)
     //new github properties
