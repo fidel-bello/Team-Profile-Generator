@@ -5,6 +5,7 @@ const util = require("util");
 
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile)
+
 //lib modules
 const Engineer = require("./lib/engineer");
 const Manager = require("./lib/manager");
@@ -12,6 +13,7 @@ const Intern = require("./lib/intern");
 
 let employees = []
 
+// variable validator that checks for empty strings and also integers and character sets
 const validate = {
     required: input => input !== ''? true : "This field is required.",
     name: input => input !== '' ? true : "Please enter a name.",
@@ -20,7 +22,7 @@ const validate = {
     
 }
 
-//starting prompts
+//variable for  questions
 const questions = {
     type: function() {
         return {
@@ -41,6 +43,7 @@ const questions = {
     }
 }
 
+//function to add team members, (manager, interns, engineers)
 async function addRole (member) {
     let { name } = await inquirer.prompt(questions.item(member, "name", "full name", validate.name));
     let { id } = await inquirer.prompt(questions.item(member, "id", "ID number", validate.id));
@@ -62,11 +65,12 @@ switch (member) {
    break;
 }
 }
- 
-function getModule(file){
+ //funciton that targets files
+function getModule(file){ 
     return readFile(file, "utf8")
 }
 
+//functions that uses the source html's to generate the html
 async function generateHtml(){
     let source= {
         Main : await getModule("./src/main.html"),
@@ -97,6 +101,7 @@ async function generateHtml(){
     createHTML(completeHTML)
 }
 
+//funciton that spits outs the file into the dist directory
 async function createHTML(html) {
     console.log("CREATING...");
     let file = `team.html`;
